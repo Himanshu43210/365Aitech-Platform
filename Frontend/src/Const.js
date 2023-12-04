@@ -1,12 +1,17 @@
-export const SIGNUP_API = "http://localhost:5002/auth/signup";
-export const LOGIN_API = "http://localhost:5002/auth/login";
-export const GET_TABS_API = "http://localhost:5002/profile/getTabs";
-export const ADD_AGENT_API = "http://localhost:5002/agent/addAgent";
-export const GET_AGENTS_API = "http://localhost:5002/agent/getAgents";
+export const SIGNUP_API =
+  "https://three65aitech-backend.onrender.com/auth/signup";
+export const LOGIN_API =
+  "https://three65aitech-backend.onrender.com/auth/login";
+export const GET_TABS_API =
+  "https://three65aitech-backend.onrender.com/profile/getTabs";
+export const ADD_AGENT_API =
+  "https://three65aitech-backend.onrender.com/agent/addAgent";
+export const GET_AGENTS_API =
+  "https://three65aitech-backend.onrender.com/agent/getAgents";
 export const GET_ACTIVE_AGENTS_API =
-  "http://localhost:5002/agent/getActiveAgents";
+  "https://three65aitech-backend.onrender.com/agent/getActiveAgents";
 export const GET_ARCHIVED_AGENTS_API =
-  "http://localhost:5002/agent/getArchivedAgents";
+  "https://three65aitech-backend.onrender.com/agent/getArchivedAgents";
 
 export const ADD_AGENT = "ADD_AGENT";
 export const AGENT_HISTORY = "AGENT_HISTORY";
