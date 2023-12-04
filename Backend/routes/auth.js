@@ -42,7 +42,15 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.send({ name: user.name, email: user.email, phone: user.phone, token });
+    res.send({
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      username: user.username,
+      token,
+      success: true,
+      status: 200,
+    });
   } catch (error) {
     res.status(500).send("Error during login");
   }

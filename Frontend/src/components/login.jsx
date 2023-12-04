@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../features/login/loginSlice";
 import "./css/login.css";
+import { LOGIN_API } from "../Const";
 
 function Login() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("exch365");
-  const [password, setPassword] = useState("12345678");
+  const [username, setUsername] = useState("hs");
+  const [password, setPassword] = useState("123");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   //   const loginState = useSelector((state) => state.login);
@@ -18,22 +19,23 @@ function Login() {
     setError("");
 
     try {
-      const response = await fetch("https://scorenodeapi.cloudd.live/signin", {
+      const response = await fetch(LOGIN_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userName: username, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (data.success && data.status === 200) {
+        console.log("inside this");
         // Dispatch action to save token and username to Redux store
         dispatch(
           loginSuccess({
-            token: data?.result?.token,
-            userName: data?.result?.userName,
+            token: data?.token,
+            userName: data?.userName,
           })
         );
 

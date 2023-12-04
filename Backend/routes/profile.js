@@ -19,7 +19,7 @@ router.get("/getTabs", async (req, res) => {
     if (!role) return res.status(404).send("Role not found");
 
     const tabs = role.tabs; // Assuming tabs is an array in the Role model
-    res.send(tabs);
+    res.send({ tabs, success: true, status: 200 });
   } catch (error) {
     console.log(error);
     res.status(500).send("Error fetching tabs");

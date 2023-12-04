@@ -22,35 +22,51 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import Tooltip from "@mui/material/Tooltip";
 import AbcIcon from "@mui/icons-material/Abc";
-import TabIcon from "@mui/icons-material/Tab";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import RoleIcon from "@mui/icons-material/SupervisorAccount";
-import UserIcon from "@mui/icons-material/Person";
-import MasterIcon from "@mui/icons-material/Build";
-import EventTypeIcon from "@mui/icons-material/Event";
-import PlayerIcon from "@mui/icons-material/SportsSoccer";
-import TeamIcon from "@mui/icons-material/Group";
-import MatchTypeIcon from "@mui/icons-material/SportsCricket";
-import PenaltyIcon from "@mui/icons-material/Report";
-import CompetitionIcon from "@mui/icons-material/EmojiEvents";
-import EventIcon from "@mui/icons-material/EventNote";
-import CommentaryIcon from "@mui/icons-material/RecordVoiceOver";
+import DigitalSalesIcon from "@mui/icons-material/ShoppingCart";
+import SEOIcon from "@mui/icons-material/Search";
+import SMOIcon from "@mui/icons-material/Share";
+import AdCampaignIcon from "@mui/icons-material/Campaign";
+import ServicingIcon from "@mui/icons-material/Build";
+import ERPAppsIcon from "@mui/icons-material/Apps";
+import AgentsIcon from "@mui/icons-material/SupervisorAccount";
+import AddAgentIcon from "@mui/icons-material/PersonAdd";
+import HistoryIcon from "@mui/icons-material/History";
+import ActiveIcon from "@mui/icons-material/CheckCircle";
+import ArchivedIcon from "@mui/icons-material/Archive";
+import LiveCallIcon from "@mui/icons-material/PhoneInTalk";
+import SupportIcon from "@mui/icons-material/Help";
+import ChatIcon from "@mui/icons-material/Chat";
+import CallIcon from "@mui/icons-material/Phone";
+import ChatbotIcon from "@mui/icons-material/Chat";
+import ConfigureChatbotIcon from "@mui/icons-material/Settings";
+import ChatbotHistoryIcon from "@mui/icons-material/History";
+import ActiveChatbotIcon from "@mui/icons-material/CheckCircle";
+import ArchivedChatbotIcon from "@mui/icons-material/Archive";
 import DefaultIcon from "@mui/icons-material/StarBorder";
+import { GET_TABS_API } from "../Const";
+import RenderPage from "./renderPages";
 
 const iconMapping = {
-  Tabs: TabIcon,
-  CMS: DashboardIcon,
-  Roles: RoleIcon,
-  Users: UserIcon,
-  Master: MasterIcon,
-  "Event Types": EventTypeIcon,
-  Players: PlayerIcon,
-  Teams: TeamIcon,
-  "Match Types": MatchTypeIcon,
-  "Penalty Runs": PenaltyIcon,
-  Competition: CompetitionIcon,
-  Events: EventIcon,
-  Commentary: CommentaryIcon,
+  "Digital Sales": DigitalSalesIcon,
+  SEO: SEOIcon,
+  SMO: SMOIcon,
+  "Ad Campaign": AdCampaignIcon,
+  Servicing: ServicingIcon,
+  "ERP Apps": ERPAppsIcon,
+  Agents: AgentsIcon,
+  "Add Agent": AddAgentIcon,
+  History: HistoryIcon,
+  Active: ActiveIcon,
+  Archived: ArchivedIcon,
+  "Live Call": LiveCallIcon,
+  Support: SupportIcon,
+  "Chat with us": ChatIcon,
+  "Call Us": CallIcon,
+  Chatbot: ChatbotIcon,
+  "Configure Chatbot": ConfigureChatbotIcon,
+  "Chatbot History": ChatbotHistoryIcon,
+  "Active Chatbot": ActiveChatbotIcon,
+  "Archived Chatbot": ArchivedChatbotIcon,
 };
 
 const selectIcon = (tabName) => {
@@ -145,25 +161,23 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [openSubMenus, setOpenSubMenus] = React.useState({});
   const [tabs, setTabs] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState("Dashboard");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       if (token) {
         try {
-          const response = await fetch(
-            "https://scorenodeapi.cloudd.live/admin/tabs",
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const response = await fetch(GET_TABS_API, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           const data = await response.json();
           if (data.success && data.status === 200) {
-            setTabs(organizeTabs(data.result));
+            setTabs(organizeTabs(data.tabs));
           }
           console.log(data);
         } catch (error) {
@@ -192,6 +206,7 @@ export default function Dashboard() {
   const renderListItems = (items, level = 0) => {
     return items.map((item, index) => (
       <React.Fragment key={item.encryptedTabId}>
+        {console.log(items)}
         <ListItem disablePadding sx={{ display: "block" }}>
           <Tooltip
             title={item.displayName}
@@ -207,7 +222,7 @@ export default function Dashboard() {
               }}
               onClick={() =>
                 item.webPage
-                  ? navigate(item.webPage)
+                  ? setCurrentPage(item.webPage)
                   : toggleSubMenu(item.encryptedTabId)
               }
             >
@@ -222,7 +237,7 @@ export default function Dashboard() {
             </ListItemButton>
           </Tooltip>
         </ListItem>
-        {item.subItems && (
+        {item.subItems && item.subItems.length > 0 && (
           <Collapse
             in={openSubMenus[item.encryptedTabId]}
             timeout="auto"
@@ -253,7 +268,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Uboldo app
+            365 AITECH SERVICE PANEL
           </Typography>
         </Toolbar>
       </AppBar>
@@ -281,7 +296,7 @@ export default function Dashboard() {
         sx={{ flexGrow: 1, p: 3 }}
       >
         <Typography variant="h2" component="h2">
-          Dashboard
+          <RenderPage currentPage={currentPage} />
         </Typography>
       </Box>
     </Box>
