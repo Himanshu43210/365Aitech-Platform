@@ -1,18 +1,20 @@
 const express = require("express");
+const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 
 router.post("/signup", async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, name, phone } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    console.log("inside Here");
     let user = new User({
       username,
       passwordHash: hashedPassword,
       email,
+      name,
+      phone,
       roles: ["freeUser"], // Default role
     });
 
@@ -40,14 +42,10 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.send({ token });
+    res.send({ name: user.name, email: user.email, phone: user.phone, token });
   } catch (error) {
     res.status(500).send("Error during login");
   }
-});
-
-router.get("/getAuthTabs", async (req, res) => {
-  // Implement logic to fetch tabs based on user roles
 });
 
 module.exports = router;
