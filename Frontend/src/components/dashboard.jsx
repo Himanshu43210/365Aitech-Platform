@@ -21,7 +21,6 @@ import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import Tooltip from "@mui/material/Tooltip";
-import AbcIcon from "@mui/icons-material/Abc";
 import DigitalSalesIcon from "@mui/icons-material/ShoppingCart";
 import SEOIcon from "@mui/icons-material/Search";
 import SMOIcon from "@mui/icons-material/Share";
@@ -274,7 +273,7 @@ export default function Dashboard() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <AbcIcon sx={{ fontSize: 50 }} />
+          365 Aitech
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
